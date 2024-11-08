@@ -1,0 +1,92 @@
+<div class="m-20 flex justify-between ">
+ <div class=" w-1/2">
+   <h1 class="text-3xl font-bold text-green-400 "> Todo Application Minimal</h1>
+  <h3 class="text-gray-500 font-thin my-2">Add a new Todo to your list
+  </h3>
+
+  <!-- Forumaile d'ajout of a new todo -->
+
+
+    <div>
+      <div class="my-8">
+        <label for="" class="text-left  text-gray-600" >Todo Title</label>
+        <br>
+        <input type="text" class="border border-gray-200 min-w-full p-2 rounded-xl" [(ngModel)]="todoObj.title">
+    </div>
+    <div class="my-8">
+        <label for="" class="text-left text-gray-600" >Todo description</label>
+        <br>
+        <textarea type="text" class="border border-gray-200 min-w-full  p-2 rounded-xl" [(ngModel)]="todoObj.description"></textarea>
+
+    </div>
+     <div class="my-8">
+        <span for="" class="text-left text-gray-600 text-xs">the status fiels will be automatically <span class="bg-red-400 text-white font-bold p-1 rounded-xl">Wait</span> you can change it after</span>
+
+
+    </div>
+      <div class="my-8">
+      @if(!editable){
+        <button class="bg-green-400 p-3 px-5 text-white font-bold rounded-full" (click)="handleAddTodo()">Add Todo</button>
+      }@else {
+         <button class="bg-orange-400 p-3 px-5 text-white font-bold rounded-full" (click)="handleUpdate()">Update Todo</button>
+      }
+
+    </div>
+    </div>
+
+  <div></div>
+ </div>
+
+
+
+ <div class="w-1/2">
+  <div>
+    <div class="bg-green-400 text-white font-bold w-full px-8 p-2">
+      List of the notes
+    </div>
+    <div>
+      <div class=" m-2 flex text-center justify-between">
+        <div>
+          <p class="font-semibold">Waiting TODO </p>
+          <p class="font-thin">{{WaitingCount}}</p>
+        </div>
+       <div>
+          <p class="font-semibold">En Cours TODO </p>
+          <p class="font-thin">{{InProgressCount}}</p>
+        </div>
+        <div>
+          <p class="font-semibold">Completed TODO </p>
+          <p class="font-thin">{{CompletedCount}}</p>
+        </div>
+      </div>
+    </div>
+   @for (item of allTodos; track $index) {
+     <div class="m-10" >
+
+      <div [class]="(item.status == 'Waiting' ? 'bg-gray-200 ' : item.status=='In_Progress'?'bg-green-300':'bg-pink-400') + ' rounded-lg'">
+         <button class=" m-3 bg-yellow-400 p-2  rounded-lg text-white text-xs" (click)="handleEdit(item)">
+              Edit the TODO
+          </button>
+          <h1 class="text-gray-600 text-center font-bold text-3xl py-8" [class]="(item.status == 'Completed' ? 'line-through ' :'') ">{{item.title}}</h1>
+
+          <p class="font-thin text-2xl text-center" [class]="(item.status == 'Completed' ? 'line-through ' :'')">{{item.description}}
+          </p>
+          <p class="text-xs font-bold text-center my-5">{{item.status}}</p>
+          <div class="flex gap-3 justify-center py-6">
+            <button class="bg-green-400 p-2 rounded-lg text-white text-xs" (click)="handleChange(item,'In_Progress')" >
+              En cours
+            </button>
+           <button class="bg-red-400 p-2 rounded-lg text-white text-xs" (click)="handleChange(item,'Completed')">
+              Completed
+            </button>
+            <button class="bg-gray-400 p-2 rounded-lg text-white text-xs" (click)="handleChange(item,'Waiting')">
+              Waiting
+            </button>
+
+          </div>
+        </div>
+    </div>
+   }
+  </div>
+ </div>
+</div>
